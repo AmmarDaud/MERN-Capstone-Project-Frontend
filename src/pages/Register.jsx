@@ -54,7 +54,7 @@ export default function Register() {
           required
         />
         <button className="bg-green-600 text-white px-4 py-2 rounded w-full hover:bg-green-700">
-          Register
+          Sign up
         </button>
       </form>
     </div>

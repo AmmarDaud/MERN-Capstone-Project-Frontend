@@ -56,7 +56,7 @@ export default function Dashboard() {
 
       <form
         onSubmit={handleCreateProject}
-        className="bg-white shadow-md rounded p-4 mb-6"
+        className="bg-sky-500/50 shadow-md rounded p-4 mb-6"
       >
         <h2 className="text-xl font-semibold mb-2">Create New Project</h2>
         <input
@@ -89,11 +89,11 @@ export default function Dashboard() {
           {projects.map((project) => (
             <li
               key={project._id}
-              className="p-4 bg-white shadow rounded flex justify-between items-center"
+              className="p-4 bg-white dark:bg-gray-600 shadow rounded flex justify-between items-center"
             >
               <div>
                 <h3 className="text-lg font-semibold">{project.name}</h3>
-                <p className="text-gray-600">{project.description}</p>
+                <p className="dark:text-white">{project.description}</p>
               </div>
               <button
                 onClick={() => navigate(`/project/${project._id}`)}
