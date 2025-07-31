@@ -28,29 +28,36 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded p-6 w-80"
+        className="bg-blue-200 rounded-lg shadow-lg p-8 w-full max-w-sm"
       >
-        <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          Sign In
+        </h1>
+
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 w-full mb-2"
+          className="w-full p-3 mb-4 rounded border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
-        />
+          autoComplete="email"/>
+
         <input
           type="password"
           placeholder="Password"
-          className="border p-2 w-full mb-4"
+          className="w-full p-3 mb-6 rounded border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
-        />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+          autoComplete="current-password"/>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition">
           Login
         </button>
       </form>

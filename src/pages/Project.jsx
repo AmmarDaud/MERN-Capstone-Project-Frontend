@@ -9,7 +9,7 @@ export default function ProjectPage() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch tasks when page loads
+  // Fetch tasks when page loads
   useEffect(() => {
     API.get(`/projects/${id}/tasks`)
       .then((res) => {
@@ -19,7 +19,7 @@ export default function ProjectPage() {
       .catch(() => setLoading(false));
   }, [id]);
 
-  // ✅ Create a new task
+  // Create a new task
   const createTask = async (e) => {
     e.preventDefault();
     try {
@@ -79,7 +79,7 @@ export default function ProjectPage() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+          className="bg-blue-400 text-white px-4 py-2 rounded w-full"
         >
           Add Task
         </button>
