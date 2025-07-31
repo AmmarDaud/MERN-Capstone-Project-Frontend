@@ -122,7 +122,7 @@ export default function Dashboard() {
                   <p className="text-cyan-200 mt-1">{project.description}</p>
                 </div>
                 <button
-                  onClick={() => navigate(`/project/${project._id}`)}
+                 onClick={() => navigate(`/projects/${project._id}`)}
                   className="bg-cyan-500 hover:bg-cyan-600 text-blue-900 font-semibold px-5 py-2 rounded-lg shadow-md transition focus:outline-none focus:ring-4 focus:ring-cyan-300"
                   aria-label={`View details of project ${project.name}`}
                 >

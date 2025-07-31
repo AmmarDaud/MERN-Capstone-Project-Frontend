@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import API from "../api.js"; 
+import API from "../api.js";
 
 export default function ProjectPage() {
   const { id } = useParams(); // project ID from URL
@@ -56,68 +56,83 @@ export default function ProjectPage() {
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading tasks...</p>;
+  if (loading) return <p className="text-center mt-10 text-cyan-400">Loading tasks...</p>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-red-500">
-      <h1 className="text-2xl font-bold mb-4 text-center">Project Tasks</h1>
+    <main className="min-h-screen bg-gradient-to-b from-blue-900 to-black p-8">
+      <div className="max-w-3xl mx-auto p-8 bg-blue-800 bg-opacity-70 rounded-xl shadow-lg">
+        <h1 className="text-3xl font-extrabold mb-6 text-center text-white drop-shadow-md">
+          Project Tasks
+        </h1>
 
-      <form onSubmit={createTask} className="mb-6">
-        <input
-          type="text"
-          placeholder="Task Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border p-2 w-full mb-2"
-          required
-        />
-        <description
-          placeholder="Task Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="border p-2 w-full mb-2"
-        />
-        <button
-          type="submit"
-          className="bg-blue-400 text-white px-4 py-2 rounded w-full"
+        {/* Add Task Form */}
+        <form
+          onSubmit={createTask}
+          className="mb-8 bg-blue-700 bg-opacity-60 p-6 rounded-lg shadow-inner"
         >
-          Add Task
-        </button>
-      </form>
+          <input
+            type="text"
+            placeholder="Task Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-3 mb-4 rounded-lg bg-blue-900 bg-opacity-50 text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            required
+          />
 
-      {/* Task List */}
-      <ul className="space-y-4">
-        {tasks.length === 0 && <p>No tasks yet.</p>}
-        {tasks.map((task) => (
-          <li
-            key={task._id}
-            className="border p-4 flex justify-between items-center"
+          <textarea
+            placeholder="Task Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-3 mb-5 rounded-lg bg-blue-900 bg-opacity-50 text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-y"
+            rows={3}
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-3 rounded-lg transition"
           >
-            <div>
-              <h2 className="font-bold">{task.title}</h2>
-              <p>{task.description}</p>
-              <p className="text-sm text-gray-500">Status: {task.status}</p>
-            </div>
-            <div className="flex gap-2">
-              <select
-                value={task.status}
-                onChange={(e) => updateStatus(task._id, e.target.value)}
-                className="border p-1"
-              >
-                <option>To Do</option>
-                <option>In Progress</option>
-                <option>Done</option>
-              </select>
-              <button
-                onClick={() => deleteTask(task._id)}
-                className="bg-red-500 text-white px-2 py-1 rounded"
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+            Add Task
+          </button>
+        </form>
+
+        {/* Task List */}
+        <ul className="space-y-4">
+          {tasks.length === 0 && (
+            <p className="text-center text-cyan-300 italic">No tasks yet. Add one above!</p>
+          )}
+
+          {tasks.map((task) => (
+            <li
+              key={task._id}
+              className="flex justify-between items-center bg-blue-700 bg-opacity-70 p-5 rounded-lg shadow-md hover:bg-blue-600 transition"
+            >
+              <div>
+                <h2 className="text-lg font-bold text-white">{task.title}</h2>
+                <p className="text-cyan-200">{task.description}</p>
+                <p className="text-sm text-cyan-300 mt-1">Status: {task.status}</p>
+              </div>
+
+              <div className="flex gap-2">
+                <select
+                  value={task.status}
+                  onChange={(e) => updateStatus(task._id, e.target.value)}
+                  className="border border-cyan-400 rounded-lg px-2 py-1 text-blue-900"
+                >
+                  <option>To Do</option>
+                  <option>In Progress</option>
+                  <option>Done</option>
+                </select>
+                <button
+                  onClick={() => deleteTask(task._id)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
+                >
+                 Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }
