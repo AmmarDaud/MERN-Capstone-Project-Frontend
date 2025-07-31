@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -10,20 +11,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (data.token) {
-        login(data.token);
+      const res = await axios.post("http://localhost:5000/api/login", form);
+      if (res.data.token) {
+        login(res.data.token);
         navigate("/");
       } else {
-        alert(data.message || "Login failed");
+        alert(res.data.message || "Login failed");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err);
+      alert(err.response?.data?.message || "Login request failed");
     }
   };
 
@@ -44,7 +41,8 @@ export default function Login() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
-          autoComplete="email"/>
+          autoComplete="email"
+        />
 
         <input
           type="password"
@@ -53,11 +51,13 @@ export default function Login() {
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
-          autoComplete="current-password"/>
+          autoComplete="current-password"
+        />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition">
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition"
+        >
           Login
         </button>
       </form>
