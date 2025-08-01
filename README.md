@@ -10,9 +10,9 @@ From personal to-do lists to collaborative team projects, Vision Suite enables u
 Built with an accessibility-first approach, it ensures a smooth experience for all users.
 
 ## 🚢 Live Deployment
-Frontend on Render → Live Link
+[View Backend on Netlify](https://mern-capstone-project-backend.onrender.com/) (Link over here)
 
-Backend on Render → Live Link
+[View Backend on Render](https://mern-capstone-project-backend.onrender.com/)
 
 ## 🛠️ Tech Stack
 
