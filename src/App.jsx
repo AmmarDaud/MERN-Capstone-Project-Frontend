@@ -15,9 +15,7 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={
+          <Route path="/"element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
@@ -27,9 +25,8 @@ export default function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/projects/:id"
-            element={
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/projects/:id" element={
               <ProtectedRoute>
                 <ProjectPage />
               </ProtectedRoute>

@@ -3,20 +3,25 @@ import { useParams } from "react-router-dom";
 import API from "../api.js";
 
 export default function ProjectPage() {
-  const { id } = useParams(); // project ID from URL
+  const { id } = useParams(); // fixed typo here
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks when page loads
+  // Fetch tasks when page loads or id changes
   useEffect(() => {
+    setLoading(true);
     API.get(`/projects/${id}/tasks`)
       .then((res) => {
         setTasks(res.data);
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error("Failed to fetch tasks:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   // Create a new task
@@ -28,11 +33,11 @@ export default function ProjectPage() {
         description,
         status: "To Do",
       });
-      setTasks([...tasks, res.data]);
+      setTasks((prev) => [...prev, res.data]);
       setTitle("");
       setDescription("");
     } catch (err) {
-      console.error(err);
+      console.error("Failed to create task:", err);
     }
   };
 
@@ -40,9 +45,11 @@ export default function ProjectPage() {
   const updateStatus = async (taskId, status) => {
     try {
       await API.put(`/projects/${id}/tasks/${taskId}`, { status });
-      setTasks(tasks.map((t) => (t._id === taskId ? { ...t, status } : t)));
+      setTasks((prev) =>
+        prev.map((t) => (t._id === taskId ? { ...t, status } : t))
+      );
     } catch (err) {
-      console.error(err);
+      console.error("Failed to update status:", err);
     }
   };
 
@@ -50,19 +57,22 @@ export default function ProjectPage() {
   const deleteTask = async (taskId) => {
     try {
       await API.delete(`/projects/${id}/tasks/${taskId}`);
-      setTasks(tasks.filter((t) => t._id !== taskId));
+      setTasks((prev) => prev.filter((t) => t._id !== taskId));
     } catch (err) {
-      console.error(err);
+      console.error("Failed to delete task:", err);
     }
   };
 
-  if (loading) return <p className="text-center mt-10 text-cyan-400">Loading tasks...</p>;
+  if (loading)
+    return (
+      <p className="text-center mt-10 text-cyan-400">Loading tasks...</p>
+    );
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-900 to-black p-8">
       <div className="max-w-3xl mx-auto p-8 bg-blue-800 bg-opacity-70 rounded-xl shadow-lg">
         <h1 className="text-3xl font-extrabold mb-6 text-center text-white drop-shadow-md">
-           Tasks
+          Tasks
         </h1>
 
         {/* Add Task Form */}
@@ -98,7 +108,9 @@ export default function ProjectPage() {
         {/* Task List */}
         <ul className="space-y-4">
           {tasks.length === 0 && (
-            <p className="text-center text-cyan-300 italic">No tasks yet. Add one above!</p>
+            <p className="text-center text-cyan-300 italic">
+              No tasks yet. Add one above!
+            </p>
           )}
 
           {tasks.map((task) => (
@@ -116,15 +128,18 @@ export default function ProjectPage() {
                 <select
                   value={task.status}
                   onChange={(e) => updateStatus(task._id, e.target.value)}
-                  className="border border-cyan-400 rounded-lg px-3 py-1 text-white">
+                  className="border border-cyan-400 rounded-lg px-3 py-1 text-white"
+                >
                   <option>To Do</option>
                   <option>In Progress</option>
                   <option>Done</option>
                 </select>
+
                 <button
                   onClick={() => deleteTask(task._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
-                 Delete
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
+                >
+                  Delete
                 </button>
               </div>
             </li>
