@@ -10,6 +10,5 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Otherwise, render the child component
   return children;
 }

@@ -8,21 +8,29 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/Home");
   };
 
   return (
-    <nav className="bg-slate-800 text-white p-4 shadow-md">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold text-center absolute left-1/2 -translate-x-1/2 ">
-          Project Management
-        </Link>
+    <nav className="bg-slate-800 text-white p-4 shadow-md relative">
+      <div className="max-w-6xl mx-auto flex items-center justify-between relative">
+        <div className="w-24" aria-hidden="true" />
 
-        <div className="flex gap-4">
+          <Link
+            to="/"
+            className="text-xl font-bold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            Project Management
+          </Link>
+
+        <div className="flex gap-4 w-fit items-center justify-end">
+          <Link to="/Home" className="hover:underline">
+            Home
+          </Link>
+
           {user ? (
             <>
-              <Link to="/" className="hover:underline">
-                Dashboard
+              <Link to="/dashboard" className="hover:underline">
+                | Dashboard |
               </Link>
               <button
                 onClick={handleLogout}

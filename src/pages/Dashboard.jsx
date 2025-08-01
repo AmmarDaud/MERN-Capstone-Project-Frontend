@@ -51,7 +51,7 @@ export default function Dashboard() {
     <main className="min-h-screen bg-gradient-to-b from-blue-900 to-black p-8">
       <div className="max-w-4xl mx-auto bg-blue-800 bg-opacity-80 rounded-xl shadow-lg p-8 text-white">
         <h1 className="text-4xl font-extrabold mb-8 text-center tracking-wide drop-shadow-lg">
-          Your Projects
+          Projects
         </h1>
 
         <form

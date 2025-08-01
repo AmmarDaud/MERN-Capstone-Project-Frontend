@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";  // Import Link
 import axios from "axios";
 
 export default function Register() {
@@ -24,7 +24,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 to-black p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-blue-200 rounded-lg shadow-lg p-8 w-full max-w-sm"
@@ -69,6 +69,14 @@ export default function Register() {
           Sign Up
         </button>
       </form>
+
+      {/* Login Link Below Form */}
+      <p className="mt-4 text-white">
+        Already have an account?{" "}
+        <Link to="/login" className="text-cyan-400 hover:underline font-semibold">
+          Login here
+        </Link>
+      </p>
     </div>
   );
 }

@@ -62,7 +62,7 @@ export default function ProjectPage() {
     <main className="min-h-screen bg-gradient-to-b from-blue-900 to-black p-8">
       <div className="max-w-3xl mx-auto p-8 bg-blue-800 bg-opacity-70 rounded-xl shadow-lg">
         <h1 className="text-3xl font-extrabold mb-6 text-center text-white drop-shadow-md">
-          Project Tasks
+           Tasks
         </h1>
 
         {/* Add Task Form */}
@@ -116,16 +116,14 @@ export default function ProjectPage() {
                 <select
                   value={task.status}
                   onChange={(e) => updateStatus(task._id, e.target.value)}
-                  className="border border-cyan-400 rounded-lg px-2 py-1 text-blue-900"
-                >
+                  className="border border-cyan-400 rounded-lg px-3 py-1 text-white">
                   <option>To Do</option>
                   <option>In Progress</option>
                   <option>Done</option>
                 </select>
                 <button
                   onClick={() => deleteTask(task._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
-                >
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
                  Delete
                 </button>
               </div>
