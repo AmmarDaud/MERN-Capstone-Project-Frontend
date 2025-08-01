@@ -10,7 +10,7 @@ From personal to-do lists to collaborative team projects, Vision Suite enables u
 Built with an accessibility-first approach, it ensures a smooth experience for all users.
 
 ## 🚢 Live Deployment
-[View Frontend on Netlify](https://visionsuitefrontend.netlify.app/home/)
+[View Frontend on Netlify](https://visionsuitefrontend.netlify.app/home)
 
 [View Backend on Render](https://mern-capstone-project-backend.onrender.com/)
 
