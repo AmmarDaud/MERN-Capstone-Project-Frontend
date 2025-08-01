@@ -1,4 +1,4 @@
-# 🎓 Eventify – A Modern Collaborative Event Planner
+# 🎓 Vision Suite (TASKER) – A Modern Project Management App
 Vision Suite (Tasker) is a modern, full-stack MERN project management application designed for individuals and small teams to plan, organize, and track projects with ease.
 From personal to-do lists to collaborative team projects, Vision Suite enables users to:
 
@@ -106,13 +106,15 @@ Tasker/
     │   └── axiosInstance.js
     └── styles/
         └── index.css
+   ``` 
 
-    ```
 
 ## 🧑🏿‍💻 Author
 
 Created by [Ammar Daud Khan](https://github.com/AmmarDaud)
 Feedback are welcome!
 
-📄 License
+
+## 📄 License
+
 This project is licensed under the MIT License.
