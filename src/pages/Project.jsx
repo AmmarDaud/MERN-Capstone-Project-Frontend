@@ -3,28 +3,25 @@ import { useParams } from "react-router-dom";
 import API from "../api.js";
 
 export default function ProjectPage() {
-  const { id } = useParams(); // fixed typo here
+  const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks when page loads or id changes
+  // Editing state
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+
   useEffect(() => {
     setLoading(true);
     API.get(`/projects/${id}/tasks`)
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch tasks:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .then((res) => setTasks(res.data))
+      .catch((err) => console.error("Failed to fetch tasks:", err))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  // Create a new task
   const createTask = async (e) => {
     e.preventDefault();
     try {
@@ -41,7 +38,6 @@ export default function ProjectPage() {
     }
   };
 
-  // Update task status
   const updateStatus = async (taskId, status) => {
     try {
       await API.put(`/projects/${id}/tasks/${taskId}`, { status });
@@ -53,7 +49,6 @@ export default function ProjectPage() {
     }
   };
 
-  // Delete a task
   const deleteTask = async (taskId) => {
     try {
       await API.delete(`/projects/${id}/tasks/${taskId}`);
@@ -63,10 +58,23 @@ export default function ProjectPage() {
     }
   };
 
-  if (loading)
-    return (
-      <p className="text-center mt-10 text-cyan-400">Loading tasks...</p>
-    );
+  // New: Update entire task
+  const updateTask = async (taskId) => {
+    try {
+      const res = await API.put(`/projects/${id}/tasks/${taskId}`, {
+        title: editTitle,
+        description: editDescription,
+      });
+      setTasks((prev) =>
+        prev.map((t) => (t._id === taskId ? res.data : t))
+      );
+      setEditingTaskId(null); // Exit edit mode
+    } catch (err) {
+      console.error("Failed to update task:", err);
+    }
+  };
+
+  if (loading) return <p className="text-center mt-10 text-cyan-400">Loading tasks...</p>;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-900 to-black p-8">
@@ -76,10 +84,7 @@ export default function ProjectPage() {
         </h1>
 
         {/* Add Task Form */}
-        <form
-          onSubmit={createTask}
-          className="mb-8 bg-blue-700 bg-opacity-60 p-6 rounded-lg shadow-inner"
-        >
+        <form onSubmit={createTask} className="mb-8 bg-blue-700 bg-opacity-60 p-6 rounded-lg shadow-inner">
           <input
             type="text"
             placeholder="Task Title"
@@ -108,9 +113,7 @@ export default function ProjectPage() {
         {/* Task List */}
         <ul className="space-y-4">
           {tasks.length === 0 && (
-            <p className="text-center text-cyan-300 italic">
-              No tasks yet. Add one above!
-            </p>
+            <p className="text-center text-cyan-300 italic">No tasks yet. Add one above!</p>
           )}
 
           {tasks.map((task) => (
@@ -118,22 +121,64 @@ export default function ProjectPage() {
               key={task._id}
               className="flex justify-between items-center bg-blue-700 bg-opacity-70 p-5 rounded-lg shadow-md hover:bg-blue-600 transition"
             >
-              <div>
-                <h2 className="text-lg font-bold text-white">{task.title}</h2>
-                <p className="text-cyan-200">{task.description}</p>
-                <p className="text-sm text-cyan-300 mt-1">Status: {task.status}</p>
-              </div>
+              {editingTaskId === task._id ? (
+                <div className="flex-1 mr-4">
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="w-full mb-2 p-2 rounded bg-blue-900 text-white border border-blue-500"
+                  />
+                  <textarea
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    className="w-full p-2 rounded bg-blue-900 text-white border border-blue-500"
+                    rows={2}
+                  />
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      onClick={() => updateTask(task._id)}
+                      className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingTaskId(null)}
+                      className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="text-lg font-bold text-white">{task.title}</h2>
+                  <p className="text-cyan-200">{task.description}</p>
+                  <p className="text-sm text-cyan-300 mt-1">Status: {task.status}</p>
+                </div>
+              )}
 
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 items-end">
                 <select
                   value={task.status}
                   onChange={(e) => updateStatus(task._id, e.target.value)}
-                  className="border border-cyan-400 rounded-lg px-3 py-1 text-white"
+                  className="border border-cyan-400 rounded-lg px-3 py-1 text-white bg-blue-900"
                 >
                   <option>To Do</option>
                   <option>In Progress</option>
                   <option>Done</option>
                 </select>
+
+                <button
+                  onClick={() => {
+                    setEditingTaskId(task._id);
+                    setEditTitle(task.title);
+                    setEditDescription(task.description);
+                  }}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg"
+                >
+                  Edit
+                </button>
 
                 <button
                   onClick={() => deleteTask(task._id)}
