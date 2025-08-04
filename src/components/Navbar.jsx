@@ -15,11 +15,9 @@ export default function Navbar() {
     <nav className="bg-slate-800 text-white p-4 shadow-md">
       <div className="max-w-6xl mx-auto flex items-center justify-between relative">
 
-        {/* Brand center, sends to Home */}
         <Link
           to="/home"
-          className="text-xl font-bold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:text-cyan-400 transition"
-        >
+          className="text-xl font-bold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:text-cyan-400 transition">
           Project Management
         </Link>
 
@@ -30,7 +28,6 @@ export default function Navbar() {
 
           {user ? (
             <>
-              {/* ✅ Fixed lowercase route */}
               <Link to="/dashboard" className="hover:underline">
                 Dashboard
               </Link>

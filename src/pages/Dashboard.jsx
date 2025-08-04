@@ -67,7 +67,8 @@ export default function Dashboard() {
           </h2>
 
           <label htmlFor="project-name" className="block mb-2 font-semibold">
-            Project Name <span className="text-red-400">*</span>
+            Project Name
+            <span className="text-red-400">*</span>
           </label>
           <input
             id="project-name"
@@ -82,7 +83,10 @@ export default function Dashboard() {
             aria-required="true"
           />
 
-          <label htmlFor="project-description" className="block mb-2 font-semibold">
+          <label
+            htmlFor="project-description"
+            className="block mb-2 font-semibold"
+          >
             Project Description
           </label>
           <textarea
@@ -105,7 +109,9 @@ export default function Dashboard() {
         </form>
 
         {loading ? (
-          <p className="text-center text-cyan-200 animate-pulse">Loading projects...</p>
+          <p className="text-center text-cyan-200 animate-pulse">
+            Loading projects...
+          </p>
         ) : projects.length === 0 ? (
           <p className="text-center text-cyan-300 italic">No projects found.</p>
         ) : (
@@ -122,7 +128,7 @@ export default function Dashboard() {
                   <p className="text-cyan-200 mt-1">{project.description}</p>
                 </div>
                 <button
-                 onClick={() => navigate(`/projects/${project._id}`)}
+                  onClick={() => navigate(`/projects/${project._id}`)}
                   className="bg-cyan-500 hover:bg-cyan-600 text-blue-900 font-semibold px-5 py-2 rounded-lg shadow-md transition focus:outline-none focus:ring-4 focus:ring-cyan-300"
                   aria-label={`View details of project ${project.name}`}
                 >
