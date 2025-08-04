@@ -75,6 +75,7 @@ export default function ProjectPage() {
           Tasks
         </h1>
 
+        {/* Add Task Form */}
         <form
           onSubmit={createTask}
           className="mb-8 bg-blue-700 bg-opacity-60 p-6 rounded-lg shadow-inner"
@@ -104,6 +105,7 @@ export default function ProjectPage() {
           </button>
         </form>
 
+        {/* Task List */}
         <ul className="space-y-4">
           {tasks.length === 0 && (
             <p className="text-center text-cyan-300 italic">
