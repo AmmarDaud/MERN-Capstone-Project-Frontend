@@ -113,8 +113,3 @@ Tasker/
 
 Created by [Ammar Daud Khan](https://github.com/AmmarDaud)
 Feedback are welcome!
-
-
-## 📄 License
-
-This project is licensed under the MIT License.
