@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import API from "../api"; // using centralized axios
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -11,9 +11,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/login", form);
+      const res = await API.post("/login", form);
+
       if (res.data.token) {
-        login(res.data.token);
+        login(res.data.token); // store token in context/localStorage
         navigate("/");
       } else {
         alert(res.data.message || "Login failed");
